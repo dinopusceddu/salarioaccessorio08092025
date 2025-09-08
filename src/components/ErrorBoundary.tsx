@@ -1,6 +1,6 @@
-// src/components/ErrorBoundary.tsx
 import React from 'react';
-import { Fallback } from './shared/Fallback.tsx';
+import { Card } from './shared/Card';
+import { Button } from './shared/Button';
 
 interface Props {
   children: React.ReactNode;
@@ -11,6 +11,37 @@ interface State {
   hasError: boolean;
   error: Error | null;
 }
+
+const Fallback: React.FC<{
+  error: Error | null;
+  title?: string;
+  message?: string;
+  actionText?: string;
+  onAction?: () => void;
+}> = ({ 
+  error, 
+  title = "Errore Critico",
+  message = "Si è verificato un errore imprevisto che impedisce il corretto funzionamento dell'applicazione.",
+  actionText = "Ricarica la pagina",
+  onAction = () => window.location.reload()
+}) => (
+  <div className="flex h-full min-h-[400px] items-center justify-center p-4 bg-[#fcf8f8]">
+    <Card title={title} className="max-w-lg w-full border-l-4 border-red-500">
+      <p className="text-[#1b0e0e] mb-4">{message}</p>
+      {error && (
+        <details className="bg-[#f3e7e8] p-2 rounded text-sm text-[#c02128] overflow-auto mb-4 cursor-pointer">
+          <summary className="font-medium">Dettagli tecnici</summary>
+          <pre className="mt-2 text-xs whitespace-pre-wrap">
+            {error.toString()}
+          </pre>
+        </details>
+      )}
+      <Button onClick={onAction} variant="primary">
+        {actionText}
+      </Button>
+    </Card>
+  </div>
+);
 
 export class ErrorBoundary extends React.Component<Props, State> {
   constructor(props: Props) {
@@ -38,8 +69,6 @@ export class ErrorBoundary extends React.Component<Props, State> {
 
   render() {
     if (this.state.hasError) {
-      // If a resetKey is provided, it's a local boundary that can be retried.
-      // Otherwise, it's a global boundary and should reload the page.
       if (this.props.resetKey) {
         return (
           <Fallback 
@@ -51,7 +80,6 @@ export class ErrorBoundary extends React.Component<Props, State> {
           />
         );
       }
-      // Global fallback
       return (
         <div className="h-screen w-screen">
           <Fallback error={this.state.error} />
