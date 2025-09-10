@@ -1,8 +1,7 @@
-// components/layout/MainLayout.tsx
 import React, { useState } from 'react';
-import { Header } from './Header.tsx';
-import { Sidebar } from './Sidebar.tsx';
-import { PageModule } from '../../types.ts';
+import { Header } from './Header';
+import { Sidebar } from './Sidebar';
+import { PageModule } from '../../types';
 
 interface MainLayoutProps {
   modules: PageModule[];
@@ -18,13 +17,13 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ modules, children }) => 
 
   return (
     <div className="relative flex size-full min-h-screen flex-col bg-[#fcf8f8] overflow-x-hidden">
-      <div className="flex h-full grow flex-col"> {/* layout-container */}
+      <div className="flex h-full grow flex-col">
         <Header toggleSidebar={toggleSidebar} />
         <div className="flex flex-1 overflow-hidden">
           <Sidebar modules={modules} isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
           <main className="flex-1 overflow-y-auto">
-            <div className="px-6 py-5 sm:px-10 md:px-10 lg:px-10 flex flex-1 justify-center"> {/* Adjusted padding */}
-              <div className="flex flex-col max-w-[960px] flex-1 w-full"> {/* layout-content-container */}
+            <div className="px-6 py-5 sm:px-10 md:px-10 lg:px-10 flex flex-1 justify-center">
+              <div className="flex flex-col max-w-[960px] flex-1 w-full">
                 {children}
               </div>
             </div>

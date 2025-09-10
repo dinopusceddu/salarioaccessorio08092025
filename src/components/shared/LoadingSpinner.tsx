@@ -1,4 +1,3 @@
-// components/shared/LoadingSpinner.tsx
 import React from 'react';
 
 interface LoadingSpinnerProps {
@@ -11,8 +10,8 @@ interface LoadingSpinnerProps {
 export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ 
   size = 'md', 
   text, 
-  textColor = 'text-[#1b0e0e]', // Default to main text color
-  spinnerColor = 'text-[#ea2832]' // Default to red accent
+  textColor = 'text-[#1b0e0e]',
+  spinnerColor = 'text-[#ea2832]'
 }) => {
   const sizeClasses = {
     sm: 'h-6 w-6',
