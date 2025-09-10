@@ -1,48 +1,10 @@
-// components/layout/Header.tsx
 import React from 'react';
-import { useAppContext } from '../../contexts/AppContext.tsx';
-import { APP_NAME } from '../../constants.ts';
+import { useAppContext } from '../../contexts/AppContext';
+import { APP_NAME } from '../../constants';
 
 interface HeaderProps {
   toggleSidebar: () => void;
 }
-
-const AppLogo = () => (
-    <svg
-      width="32"
-      height="32"
-      viewBox="0 0 100 100"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-      className="flex-shrink-0"
-    >
-      <rect width="100" height="100" fill="#ea2832" />
-      <text
-        x="50"
-        y="38"
-        fontFamily="system-ui, -apple-system, 'Public Sans', sans-serif"
-        fontSize="48"
-        fontWeight="900"
-        fill="white"
-        textAnchor="middle"
-        dominantBaseline="middle"
-      >
-        FP
-      </text>
-      <text
-        x="50"
-        y="78"
-        fontFamily="system-ui, -apple-system, 'Public Sans', sans-serif"
-        fontSize="24"
-        fontWeight="700"
-        fill="white"
-        textAnchor="middle"
-        dominantBaseline="middle"
-      >
-        CGIL
-      </text>
-    </svg>
-  );
 
 export const Header: React.FC<HeaderProps> = ({ toggleSidebar }) => {
   const { state } = useAppContext();
@@ -62,7 +24,6 @@ export const Header: React.FC<HeaderProps> = ({ toggleSidebar }) => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             </button>
-            <AppLogo />
             <h1 className="text-[#1b0e0e] text-lg font-bold leading-tight tracking-[-0.015em]">{APP_NAME}</h1>
           </div>
           <div className="flex items-center">

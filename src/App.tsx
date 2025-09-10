@@ -1,11 +1,8 @@
-import React, { Suspense } from 'react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import React from 'react';
 import { AppProvider, useAppContext } from './contexts/AppContext';
 import { MainLayout } from './components/layout/MainLayout';
-import { LoadingSpinner } from './components/shared/LoadingSpinner';
-import { ErrorBoundary } from './components/ErrorBoundary';
 import { PageModule } from './types';
+import { LoadingSpinner } from './components/shared/LoadingSpinner';
 
 // Import delle pagine
 import { HomePage } from './pages/HomePage';
@@ -14,15 +11,6 @@ import { FundDetailsPage } from './pages/FundDetailsPage';
 import { CompliancePage } from './pages/CompliancePage';
 import { ReportsPage } from './pages/ReportsPage';
 import { ChecklistPage } from './pages/ChecklistPage';
-
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: 3,
-      staleTime: 5 * 60 * 1000,
-    },
-  },
-});
 
 const allPageModules: PageModule[] = [
   { id: 'benvenuto', name: 'Benvenuto!', component: HomePage },
@@ -53,35 +41,22 @@ const AppContent: React.FC = () => {
 
   return (
     <MainLayout modules={visibleModules}>
-      <ErrorBoundary resetKey={activeTab}>
-        {isLoading ? (
-          <div className="flex justify-center items-center h-full">
-            <LoadingSpinner text="Caricamento applicazione..." />
-          </div>
-        ) : (
-          <ActiveComponent />
-        )}
-      </ErrorBoundary>
+      {isLoading ? (
+        <div className="flex justify-center items-center h-full">
+          <LoadingSpinner text="Caricamento applicazione..." />
+        </div>
+      ) : (
+        <ActiveComponent />
+      )}
     </MainLayout>
   );
 };
 
 const App: React.FC = () => {
   return (
-    <ErrorBoundary>
-      <QueryClientProvider client={queryClient}>
-        <AppProvider>
-          <Suspense fallback={
-            <div className="flex h-screen items-center justify-center">
-              <LoadingSpinner text="Caricamento applicazione..." />
-            </div>
-          }>
-            <AppContent />
-          </Suspense>
-        </AppProvider>
-        <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
-    </ErrorBoundary>
+    <AppProvider>
+      <AppContent />
+    </AppProvider>
   );
 };
 
